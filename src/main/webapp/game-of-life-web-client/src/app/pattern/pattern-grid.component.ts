@@ -10,10 +10,10 @@ import {isPresent} from "../core/util";
 })
 export class PatternGridComponent implements OnInit {
 
-  @Input() pattern: Pattern;
+  @Input() pattern: Pattern = Pattern.createEmptyPattern();
   tiles = new Map<number, Tile>();
-  rows = Array(35).fill(1, 0, 60).map((x, i) => i);
-  columns = Array(70).fill(1, 0, 120).map((x, i) => i);
+  rows = Array(35).fill(1, 0, 35).map((x, i) => i);
+  columns = Array(70).fill(1, 0, 70).map((x, i) => i);
   aliveTiles = new Set<Tile>();
 
   constructor() {
