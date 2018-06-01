@@ -16,3 +16,6 @@ After running this jar file the application can be accessed via `localhost:8080`
 - Auto playing next generation.
 - Stepping to next generation manually.
 - Generation counter.
+
+## Requirements
+Maven, Java
