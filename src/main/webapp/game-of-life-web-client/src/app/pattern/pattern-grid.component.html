@@ -1,0 +1,9 @@
+<table class="pattern-grid-table">
+  <tr *ngFor="let rowIndex of rows">
+    <td class="pattern-grid-tile"
+        *ngFor="let columnIndex of columns"
+        [ngClass]="{'alive-tile': tiles.get(getTileIndexFromRowAndColumn(rowIndex, columnIndex)).alive}"
+        (click)="markTile(tiles.get(getTileIndexFromRowAndColumn(rowIndex, columnIndex)))">
+    </td>
+  </tr>
+</table>

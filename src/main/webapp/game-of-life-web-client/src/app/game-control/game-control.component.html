@@ -1,0 +1,35 @@
+<mat-card class="background-card">
+  <mat-toolbar>
+    <span class="game-header"><strong>{{ 'title' | translate}}</strong></span>
+  </mat-toolbar>
+  <gol-pattern-grid [pattern]="pattern"></gol-pattern-grid>
+  <mat-card class="control-card-padding">
+    <div class="row">
+      <div class="col-md-1 button-indent">
+        <button mat-raised-button (click)="reset()">{{ 'control.reset' | translate }}</button>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field>
+          <mat-select [placeholder]="'control.patterns' | translate" [(ngModel)]="pattern" (ngModelChange)="loadPattern(pattern)">
+            <mat-option *ngFor="let pattern of patterns" [value]="pattern">
+              {{ pattern.title }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-1 button-indent">
+        <button mat-raised-button (click)="nextGeneration()">{{ 'control.nextGeneration' | translate }}</button>
+      </div>
+      <div class="col-md-1 offset-md-1 button-indent">
+        <button mat-raised-button (click)="play()">{{ 'control.play' | translate }}</button>
+      </div>
+      <div class="col-md-1 button-indent">
+        <button mat-raised-button (click)="stop()">{{ 'control.stop' | translate }}</button>
+      </div>
+      <div class="col-md-1 offset-md-3 generation-counter-indent">
+        <span class="mat-raised-button">{{ 'control.generationCounter' | translate }}{{ generationCounter }}</span>
+      </div>
+    </div>
+  </mat-card>
+  <gol-file-upload (fileUploaded)="patternUploaded($event)"></gol-file-upload>
+</mat-card>

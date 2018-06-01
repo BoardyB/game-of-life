@@ -1,0 +1,54 @@
+.file-upload-dropzone {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.file-over-drop-zone {
+  border: dotted 3px #00acc1;
+}
+
+.file-select-content {
+  margin-top: 20px;
+}
+
+.upload-type-separator {
+  color: rgba(0, 0, 0, 0.38);
+  padding-right: 15px;
+}
+
+.file-upload-label {
+  padding: 0 10px 10px 0;
+  cursor: pointer;
+  color: dodgerblue;
+}
+
+.file-upload-label:hover {
+  text-decoration: underline;
+}
+
+.file-upload-progress-bar {
+  margin-bottom: 25px;
+}
+
+.uploaded-file-label {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.uploaded-file-alert {
+  color: red;
+}
+
+.file-upload-input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.uploaded-file-badge {
+  bottom: 5px;
+  position: relative;
+}
+
+.upload-card-padding {
+  margin-top: 25px;
+}

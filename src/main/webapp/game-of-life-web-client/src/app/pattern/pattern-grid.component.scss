@@ -1,0 +1,15 @@
+.pattern-grid-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.pattern-grid-tile {
+  background-color: #656565;
+  border: solid 1px;
+  width: 1.429%;
+  padding-bottom: 1.429%;
+  display: inline-block;
+}
+
+.alive-tile {
+  background-color: #e7ff00;
+}

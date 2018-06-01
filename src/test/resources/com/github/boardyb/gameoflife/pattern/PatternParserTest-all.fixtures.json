@@ -1,0 +1,35 @@
+{
+  "shouldParsePatternCorrectly-result": {
+    "title": "test.lif",
+    "coordinates": [
+      {
+        "column": 38,
+        "row": 20
+      },
+      {
+        "column": 39,
+        "row": 20
+      },
+      {
+        "column": 40,
+        "row": 20
+      },
+      {
+        "column": 38,
+        "row": 21
+      },
+      {
+        "column": 40,
+        "row": 21
+      },
+      {
+        "column": 38,
+        "row": 22
+      },
+      {
+        "column": 40,
+        "row": 22
+      }
+    ]
+  }
+}

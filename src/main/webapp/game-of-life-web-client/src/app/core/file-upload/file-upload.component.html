@@ -1,0 +1,54 @@
+<mat-card class="upload-card-padding">
+  <div class="row"
+       *ngIf="!uploader.isUploading && uploader.queue.length <= 0">
+    <div class="col-lg-8">
+      <div ng2FileDrop
+           [ngClass]="{'file-over-drop-zone': hasBaseDropZoneOver}"
+           (fileOver)="fileOverDropZone($event)"
+           [uploader]="uploader"
+           class="well file-upload-dropzone">
+        {{ 'fileUpload.dropZoneLabel' | translate }}
+      </div>
+    </div>
+    <div class="col-lg-4 file-select-content">
+      <span class="upload-type-separator">&ndash; {{ 'fileUpload.or' | translate }} &ndash;</span>
+      <label class="file-upload-label">
+        {{ 'fileUpload.uploadInputLabel' | translate }}
+        <input #fileUploadInput
+               class="file-upload-input"
+               type="file"
+               ng2FileSelect
+               [uploader]="uploader"
+               (change)="resetElement($event)"/>
+      </label>
+    </div>
+  </div>
+  <mat-progress-bar class="file-upload-progress-bar"
+                    mode="indeterminate"
+                    *ngIf="uploader.isUploading"></mat-progress-bar>
+  <div class="row"
+       *ngIf="uploader.queue.length > 0 && !uploader.isUploading && uploader.queue[0].isSuccess">
+    <div class="col-lg-2">
+      <div class="uploaded-file-label">
+        {{'fileUpload.fileAddedLabel' | translate }}
+      </div>
+    </div>
+    <div class="col-lg-2">
+      <mat-chip-list>
+        <mat-chip class="uploaded-file-badge" [removable]="true" (removed)="remove()">
+          {{ getLastElementOfQueue().file.name }}
+          <mat-icon matChipRemove class="remove-icon" (click)="remove()">cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+
+  <div class="row"
+       *ngIf="uploader.queue.length > 0 && !uploader.isUploading && !uploader.queue[0].isSuccess">
+    <div class="col-lg-6">
+      <div class="uploaded-file-alert">
+        {{'fileUpload.fileAddedAlert' | translate }}
+      </div>
+    </div>
+  </div>
+</mat-card>

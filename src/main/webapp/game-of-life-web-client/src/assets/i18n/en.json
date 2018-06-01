@@ -1,0 +1,18 @@
+{
+  "title": "Game of Life",
+  "fileUpload": {
+    "dropZoneLabel": "Drop Files Here",
+    "or": "Or",
+    "uploadInputLabel": "Upload File",
+    "fileAddedLabel": "File Added",
+    "fileAddedAlert": "File Upload Unsuccessful"
+  },
+  "control": {
+    "reset": "Reset",
+    "patterns": "Patterns",
+    "nextGeneration": "Next Generation",
+    "play": "Play",
+    "stop": "Stop",
+    "generationCounter": "Generation: "
+  }
+}
