@@ -20,17 +20,41 @@ public class PatternParser {
     @Autowired
     private FileUploadProperties fileUploadProperties;
 
+    /**
+     * Creates Pattern object from MultipartFile.
+     * This method converts MultipartFile to File object and calls createPattern(File file)
+     * @param multipartFile multipart file to parse.
+     * @return Pattern object parsed from the file.
+     * @throws Exception if an error occurs during file conversion or parsing.
+     */
     public Pattern createPattern(MultipartFile multipartFile) throws Exception {
         File file = new File(fileUploadProperties.getPatternPath(), multipartFile.getOriginalFilename());
         writeByteArrayToFile(file, multipartFile.getBytes());
         return this.createPattern(file);
     }
 
+    /**
+     * Create Pattern object from given file.
+     * Pattern title will be the file name, coordinates will be parsed from file content.
+     * @param file to parse Pattern from
+     * @return Pattern object parsed from the file.
+     * @throws IOException if an error occurs during reading file.
+     */
     public Pattern createPattern(File file) throws IOException {
         InputStream fileInputStream = new FileInputStream(file);
         return parsePattern(file.getName(), fileInputStream);
     }
 
+    /**
+     * Creates Pattern object from given InputStream.
+     * Pattern coordinates will be parsed from center of the grid and #P parameter values.
+     * In .lif files '*' represents an alive tile, whenever an alive tile is found a pattern coordinate will be
+     * added to the Pattern object at the grid position.
+     * @param fileName title of the pattern
+     * @param fileInputStream InputStream to parse.
+     * @return Pattern object parsed from the file.
+     * @throws IOException if any error occurs during file reading.
+     */
     protected Pattern parsePattern(String fileName, InputStream fileInputStream) throws IOException {
         String line;
         BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
@@ -55,7 +79,7 @@ public class PatternParser {
                 for (int c = 0; c < chars.length; c++) {
                     if (chars[c].equals("*")) {
                         boolean columnInBounds = currentCol + c >= 0 && currentCol + c < columns;
-                        boolean rowInBounds = currentRow > 0 && currentRow < rows;
+                        boolean rowInBounds = currentRow >= 0 && currentRow < rows;
                         if (columnInBounds && rowInBounds) {
                             patternMap.getCoordinates().add(new PatternCoordinates(currentCol + c, currentRow));
                         }

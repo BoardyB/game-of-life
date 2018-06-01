@@ -34,6 +34,10 @@ public class PatternManager {
     @Autowired
     private FileUploadProperties fileUploadProperties;
 
+    /**
+     * This method initializes the stored patterns from .lif files from the file system.
+     * It does not initialize patterns is FileUploadProperties patternPath is not configured in application.properties.
+     */
     @PostConstruct
     private void initializeDefaultPatterns() {
         if (!isNullOrEmpty(fileUploadProperties.getPatternPath())) {
@@ -41,6 +45,10 @@ public class PatternManager {
         }
     }
 
+    /**
+     * This method is responsible for creating Pattern objects and storing it.
+     * It handles errors if path given in properties is not valid.
+     */
     private void loadDefaultPatterns() {
         try {
             List<File> collectedFiles = loadLifFiles();
@@ -53,6 +61,12 @@ public class PatternManager {
         }
     }
 
+    /**
+     * This method is responsible for loading .lif files from file system.
+     * Only files with .lif extension will be loaded from the folder.
+     * @return List of .lif files.
+     * @throws Exception if an error occurs during reading of files.
+     */
     private List<File> loadLifFiles() throws Exception {
         Stream<Path> patternFolderStream = Files.walk(Paths.get(fileUploadProperties.getPatternPath()));
         return patternFolderStream
@@ -61,6 +75,12 @@ public class PatternManager {
                 .collect(toList());
     }
 
+    /**
+     * This method is responsible for storing patterns parsed from multipart files.
+     * @param multipartFile to parse Pattern object from.
+     * @return Pattern object parsed from multipart file.
+     * @throws Exception if an error occurs during parsing of the multipart file.
+     */
     public Pattern storePattern(MultipartFile multipartFile) throws Exception {
         Pattern pattern = patternParser.createPattern(multipartFile);
         storedPatterns.put(multipartFile.getOriginalFilename(), pattern);
@@ -68,9 +88,21 @@ public class PatternManager {
         return pattern;
     }
 
+    /**
+     * This method returns all the previously stored patterns.
+     * @return collection of Pattern objects.
+     */
     public Collection<Pattern> getAllPatterns() {
         Collection<Pattern> values = this.storedPatterns.values();
         logger.debug("Patterns have been loaded [{}]", values);
         return values;
+    }
+
+    public void setPatternParser(PatternParser patternParser) {
+        this.patternParser = patternParser;
+    }
+
+    public void setFileUploadProperties(FileUploadProperties fileUploadProperties) {
+        this.fileUploadProperties = fileUploadProperties;
     }
 }

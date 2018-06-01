@@ -22,12 +22,20 @@ public class PatternParserTest {
     @Before
     public void setUp() throws Exception {
         FixtureAnnotations.initFixtures(this);
-        testPattern = this.getClass().getResourceAsStream("lifs/test.lif");
     }
 
     @Test
     public void shouldParsePatternCorrectly() throws IOException {
+        testPattern = this.getClass().getResourceAsStream("lifs/test.lif");
         Pattern pattern = patternParser.parsePattern("test.lif", testPattern);
         FixtureAssert.assertThat(pattern).matches("shouldParsePatternCorrectly-result");
+    }
+
+
+    @Test
+    public void shouldPutCoordinatesToStartOfTheGridIfParametersWereNotGiven() throws IOException {
+        testPattern = this.getClass().getResourceAsStream("lifs/lif-without-parameters.lif");
+        Pattern pattern = patternParser.parsePattern("lif-without-parameters.lif", testPattern);
+        FixtureAssert.assertThat(pattern).matches("shouldPutCoordinatesToStartOfTheGridIfParametersWereNotGiven-result");
     }
 }

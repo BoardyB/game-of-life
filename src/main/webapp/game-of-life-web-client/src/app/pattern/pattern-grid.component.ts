@@ -25,12 +25,18 @@ export class PatternGridComponent implements OnInit {
     this.markAliveTiles();
   }
 
+  /**
+   * Marks all tiles dead.
+   */
   resetTiles(): void {
     this.tiles.forEach((value, key, map) => {
       value.alive = false;
     });
   }
 
+  /**
+   * Creates tiles map which consist of an index of the file as key and Tile object as value.
+   */
   private initializeTiles() {
     for (let i = 0; i < 2450; i++) {
       const row = Math.floor(i / 70);
@@ -39,6 +45,9 @@ export class PatternGridComponent implements OnInit {
     }
   }
 
+  /**
+   * Marks alive patterns cased off pattern object coordinates.
+   */
   private markAliveTiles() {
     this.aliveTiles = new Set<Tile>();
     this.pattern.coordinates.forEach((coordinate: PatternCoordinate) => {
@@ -62,9 +71,18 @@ export class PatternGridComponent implements OnInit {
     return this.getTileIndexFromRowAndColumn(tile.row, tile.column)
   }
 
+  /**
+   * Calculates next generation of the game.
+   * The calculation start from the currently alive tiles.
+   * It collects all neighbors of the tiles and checks if the tile has less neighbors than 2 or more neighbors than 3.
+   * If any of the above occurs the tile will be dead next generation so it will be collected in the dead tiles.
+   * The method iterates the above collected neighbors and collects the neighbor tiles which will be alive
+   * next generation. This happens if a tile is dead and has exactly 3 alive neighbors.
+   * Lastly the dead tiles will be marked dead, the alive tiles will be marked alive.
+   */
   nextGeneration(): void {
     const tilesDeadNextGeneration = new Set<Tile>();
-    const tilesBornNextGeneration = new Set<Tile>()
+    const tilesBornNextGeneration = new Set<Tile>();
     this.aliveTiles.forEach((tile: Tile) => {
       const neighborsOfTile = this.collectNeighborsOfTile(tile);
       neighborsOfTile.forEach((neighbor: Tile) => {
@@ -85,6 +103,13 @@ export class PatternGridComponent implements OnInit {
     tilesBornNextGeneration.forEach((tile: Tile) => this.aliveTiles.add(tile));
   }
 
+  /**
+   * Collects all neighbors of a tile.
+   * This method collects tiles exactly beside the current tile,then it collects the tiles exactly above and below the
+   * given tile and collects their neighbors too.
+   * @param {Tile} tile to load neighbors of.
+   * @returns {Tile[]} neighbors of given tile.
+   */
   collectNeighborsOfTile(tile: Tile): Tile[] {
     let neighbors: Tile[] = [];
     const indexOfTile = this.getTileIndex(tile);
@@ -107,6 +132,11 @@ export class PatternGridComponent implements OnInit {
     return neighbors;
   }
 
+  /**
+   * This method loads the tiles exactly beside the indexed tile.
+   * @param {number} indexOfTile index of tile which neighbor needs to be loaded
+   * @returns {Tile[]} neighbors of indexed tile.
+   */
   private getSideNeighborsOf(indexOfTile: number): Tile[] {
     const sideNeighbors: Tile[] = [];
     const tileLeftOfTheTile = this.tiles.get(indexOfTile - 1);
